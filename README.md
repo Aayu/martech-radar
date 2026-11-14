@@ -49,7 +49,9 @@ Use a separate repository such as `Aayu/martech-radar`. This keeps the radar ind
 2. In **Settings → Actions → General**, allow workflows to read and write repository contents.
 3. Open **Actions → Daily Martech Radar → Run workflow** for the first controlled run.
 4. Check the run summary, the `Sources` view and the committed `state/snapshot` changes.
-5. For a public repository, enable **Settings → Pages → Deploy from a branch**, select `main` and `/docs`. The resulting Pages URL is the reading interface, so day-to-day use does not require the GitHub file UI.
+5. In **Settings → Pages**, choose **GitHub Actions** as the publishing source. The daily workflow publishes the generated dashboard after every collection run, so day-to-day use requires only one bookmarked link and no downloads.
+
+The expected dashboard address is `https://aayu.github.io/martech-radar/`. GitHub Pages is available for public repositories on GitHub Free; private-repository availability depends on the account plan. Publishing the dashboard makes its contents publicly accessible even when the source repository is private, so repository visibility must never be changed implicitly.
 
 The schedule targets 08:00 IST (`02:30 UTC`). GitHub schedules can start late during busy periods, so 08:00 is a target rather than a delivery guarantee. The workflow has a 15-minute ceiling and also uploads the current reading files as a 14-day downloadable artifact.
 
