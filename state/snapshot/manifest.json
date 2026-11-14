@@ -35,7 +35,7 @@
         "legacy_disposition",
         "brief"
       ],
-      "rows": 120
+      "rows": 678
     },
     "checks": {
       "columns": [
@@ -46,7 +46,7 @@
         "detail",
         "discovered"
       ],
-      "rows": 0
+      "rows": 14
     },
     "legacy": {
       "columns": [
@@ -63,7 +63,7 @@
         "status",
         "detail"
       ],
-      "rows": 0
+      "rows": 1
     },
     "sightings": {
       "columns": [
@@ -72,7 +72,7 @@
         "first_seen",
         "last_seen"
       ],
-      "rows": 120
+      "rows": 692
     },
     "sources": {
       "columns": [
