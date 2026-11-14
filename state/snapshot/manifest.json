@@ -1,0 +1,94 @@
+{
+  "tables": {
+    "articles": {
+      "columns": [
+        "id",
+        "url",
+        "source_id",
+        "title",
+        "published",
+        "modified",
+        "first_seen",
+        "last_seen",
+        "state",
+        "attempts",
+        "retry_after",
+        "excerpt",
+        "content_hash",
+        "canonical_hint",
+        "tags",
+        "companies",
+        "beats",
+        "priority",
+        "reason",
+        "evidence",
+        "duplicate_of",
+        "related_to",
+        "original_links",
+        "error",
+        "read_status",
+        "notes",
+        "editorial_score",
+        "review_status",
+        "review_details",
+        "legacy_key",
+        "legacy_disposition",
+        "brief"
+      ],
+      "rows": 120
+    },
+    "checks": {
+      "columns": [
+        "run_id",
+        "source_id",
+        "checked",
+        "status",
+        "detail",
+        "discovered"
+      ],
+      "rows": 0
+    },
+    "legacy": {
+      "columns": [
+        "story_key",
+        "payload"
+      ],
+      "rows": 120
+    },
+    "runs": {
+      "columns": [
+        "id",
+        "started",
+        "finished",
+        "status",
+        "detail"
+      ],
+      "rows": 0
+    },
+    "sightings": {
+      "columns": [
+        "article_id",
+        "source_id",
+        "first_seen",
+        "last_seen"
+      ],
+      "rows": 120
+    },
+    "sources": {
+      "columns": [
+        "id",
+        "config",
+        "last_attempt",
+        "last_success",
+        "checkpoint",
+        "next_due",
+        "status",
+        "detail",
+        "discovered",
+        "consecutive_failures"
+      ],
+      "rows": 53
+    }
+  },
+  "version": 1
+}

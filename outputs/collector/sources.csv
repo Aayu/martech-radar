@@ -1,0 +1,54 @@
+Source ID,Source,Type,Beats,Check interval (hours),Enabled,Coverage,Last successful check,Next due,New links total,Issue or detail,Entry page
+adexchanger,AdExchanger,publisher,enterprise,24,Pending access,Not yet checked,Never,Initial schedule,0,The publisher's robots endpoint returned 403 in the 2026-11-15 server probe; retained for a future permitted feed adapter.,https://www.adexchanger.com/feed/
+afaqs,afaqs!,publisher,"fmcg, journey",48,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.afaqs.com/news/digital
+albertsons,Albertsons,brand,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The public newsroom returned 403 in the 2026-11-15 server probe.,https://www.albertsonscompanies.com/newsroom/press-releases/default.aspx
+amazon,Amazon,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.aboutamazon.com/news
+amex,American Express,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.americanexpress.com/en-us/newsroom/
+braze,Braze customer stories,case_library,journey,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.braze.com/customers
+cgt,Consumer Goods Technology,publisher,fmcg,48,Enabled,Not yet checked,Never,Initial schedule,0,,https://consumergoods.com/sales-and-marketing
+chiefmartec,chiefmartec,publisher,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://chiefmartec.com/feed/
+cmswire,CMSWire,publisher,enterprise,72,Pending access,Not yet checked,Never,Initial schedule,0,The publisher's robots endpoint returned 403 in the 2026-11-15 server probe.,https://www.cmswire.com/
+cocacola,Coca-Cola,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.coca-colacompany.com/media-center
+colgate,Colgate-Palmolive,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.colgatepalmolive.com/en-us/who-we-are/stories
+danone,Danone,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Danone mentions remain covered through FMCG aggregators.,https://www.danone.com/media/press-releases-list.html
+disney,Disney,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://thewaltdisneycompany.com/news/
+effie,Effie public cases,case_library,journey,168,Pending access,Not yet checked,Never,Initial schedule,0,Public index needs access validation; paid case library is excluded.,https://effie.org/sample-cases/
+et_brandequity,ET BrandEquity,publisher,"fmcg, journey",24,Enabled,Not yet checked,Never,Initial schedule,0,,https://brandequity.economictimes.indiatimes.com/
+et_retail,ET Retail,publisher,enterprise,72,Enabled,Not yet checked,Never,Initial schedule,0,,https://retail.economictimes.indiatimes.com/
+eu_digital,European Commission digital news,regulator,regulation,24,Enabled,Not yet checked,Never,Initial schedule,0,,https://digital-strategy.ec.europa.eu/en/news
+finextra,Finextra,publisher,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The public page returned 403 in the 2026-11-15 server probe.,https://www.finextra.com/
+ftc,FTC press releases,regulator,regulation,24,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.ftc.gov/news-events/news/press-releases
+godrej,Godrej Consumer,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The newsroom currently exposes releases as PDFs; media documents are retained for manual review rather than scraped as articles.,https://www.godrejcp.com/media/press-releases
+haleon,Haleon,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Haleon mentions remain covered through FMCG aggregators.,https://www.haleon.com/news
+hilton,Hilton,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://stories.hilton.com/
+ico,ICO news,regulator,regulation,24,Pending access,Not yet checked,Never,Initial schedule,0,"The official ICO site says its News and blogs RSS is unavailable, and the current page exposed no dated article links to the server probe.",https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/
+itc,ITC,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.itcportal.com/media-centre/press-releases.aspx
+loreal,L’Oréal,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no qualifying article links to the 2026-11-15 server probe; L’Oréal remains covered through FMCG aggregators.,https://www.loreal.com/en/news/
+marico,Marico,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Marico mentions remain covered through India FMCG aggregators.,https://marico.com/india/media
+marketing_dive,Marketing Dive,publisher,"fmcg, journey",24,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.marketingdive.com/feeds/news/
+marriott,Marriott,brand,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe.,https://news.marriott.com/
+mars,Mars,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.mars.com/news-and-stories
+martech,MarTech,publisher,enterprise,24,Enabled,Not yet checked,Never,Initial schedule,0,,https://martech.org/feed/
+mcdonalds,McDonald’s,brand,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; McDonald’s remains covered through enterprise and campaign publishers.,https://corporate.mcdonalds.com/corpmcd/our-stories.html
+meity,MeitY updates,regulator,regulation,24,Pending access,Not yet checked,Never,Initial schedule,0,The current homepage exposed no qualifying update links to the server probe; regulation coverage continues through primary gazette and EU/FTC sources.,https://www.meity.gov.in/
+mondelez,Mondelēz,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Mondelēz mentions remain covered through FMCG aggregators.,https://www.mondelezinternational.com/news/
+nectar360,Nectar360 case studies,case_library,"fmcg, journey",168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.nectar360.co.uk/case-study-sitemap.xml
+nestle,Nestlé,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The publisher's robots endpoint returned 403 in the 2026-11-15 server probe; Nestlé mentions remain covered through the FMCG aggregators.,https://www.nestle.com/media/news
+nike,Nike,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://about.nike.com/en/newsroom
+p2pi,Path to Purchase Institute,publisher,"fmcg, journey",72,Pending access,Not yet checked,Never,Initial schedule,0,Research retrieval returned 403; requires a permitted access route.,https://p2pi.com/
+pepsico,PepsiCo,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.pepsico.com/newsroom
+pg,P&G,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://us.pg.com/blogs/
+phocuswire,PhocusWire,publisher,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The publisher's robots endpoint returned 403 in the 2026-11-15 server probe.,https://www.phocuswire.com/
+reckitt,Reckitt,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Reckitt mentions remain covered through FMCG aggregators.,https://www.reckitt.com/newsroom/
+retail_dive,Retail Dive,publisher,enterprise,48,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.retaildive.com/feeds/news/
+retail_touchpoints,Retail TouchPoints,publisher,"enterprise, journey",48,Pending access,Not yet checked,Never,Initial schedule,0,The public feed and homepage returned 403 in the 2026-11-15 server probe.,https://www.retailtouchpoints.com/feed/
+samsung,Samsung,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://news.samsung.com/global/
+shopify,Shopify changelog,platform,enterprise,24,Enabled,Not yet checked,Never,Initial schedule,0,,https://shopify.dev/changelog
+starbucks,Starbucks,brand,enterprise,168,Pending access,Not yet checked,Never,Initial schedule,0,The publisher's robots endpoint returned 403 in the 2026-11-15 server probe.,https://about.starbucks.com/stories/
+target,Target,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://corporate.target.com/press
+tata,Tata Consumer,brand,fmcg,168,Pending access,Not yet checked,Never,Initial schedule,0,The current newsroom exposed no article links to the server probe; Tata Consumer mentions remain covered through India FMCG aggregators.,https://www.tataconsumer.com/newsroom
+the_drum,The Drum,publisher,"fmcg, journey",48,Pending access,Not yet checked,Never,Initial schedule,0,The public page returned a non-content 202 response in the 2026-11-15 server probe.,https://www.thedrum.com/
+think_google,Think with Google,platform,journey,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://business.google.com/sitemaps/twg/sitemap-1.xml
+unilever,Unilever,brand,fmcg,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://www.unilever.com/news/
+walmart,Walmart,brand,enterprise,168,Enabled,Not yet checked,Never,Initial schedule,0,,https://corporate.walmart.com/newsroom
+warc_public,WARC public coverage,publisher,journey,168,Pending access,Not yet checked,Never,Initial schedule,0,The public index did not expose article links to the server collector in the 2026-11-15 probe; paid content is excluded.,https://www.warc.com/en/latest

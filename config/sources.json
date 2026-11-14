@@ -1,0 +1,1204 @@
+{
+  "version": 1,
+  "timezone": "Asia/Kolkata",
+  "schedule_target": "08:00",
+  "sources": [
+    {
+      "id": "marketing_dive",
+      "name": "Marketing Dive",
+      "kind": "publisher",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://www.marketingdive.com/feeds/news/"
+        },
+        {
+          "type": "html",
+          "url": "https://www.marketingdive.com/"
+        }
+      ],
+      "include": "/news/"
+    },
+    {
+      "id": "martech",
+      "name": "MarTech",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://martech.org/feed/"
+        },
+        {
+          "type": "html",
+          "url": "https://martech.org/"
+        }
+      ]
+    },
+    {
+      "id": "adexchanger",
+      "name": "AdExchanger",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 24,
+      "enabled": false,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://www.adexchanger.com/feed/"
+        },
+        {
+          "type": "html",
+          "url": "https://www.adexchanger.com/daily-news-roundup/"
+        }
+      ],
+      "disabled_reason": "The publisher's robots endpoint returned 403 in the 2026-11-15 server probe; retained for a future permitted feed adapter."
+    },
+    {
+      "id": "cgt",
+      "name": "Consumer Goods Technology",
+      "kind": "publisher",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 48,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://consumergoods.com/sales-and-marketing"
+        }
+      ],
+      "selector": "a[href]",
+      "exclude": "/tag/|/category/|/events|/subscribe|/sales-and-marketing$|/market-segment/"
+    },
+    {
+      "id": "retail_dive",
+      "name": "Retail Dive",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 48,
+      "enabled": true,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://www.retaildive.com/feeds/news/"
+        },
+        {
+          "type": "html",
+          "url": "https://www.retaildive.com/topic/technology/"
+        }
+      ],
+      "include": "/news/"
+    },
+    {
+      "id": "retail_touchpoints",
+      "name": "Retail TouchPoints",
+      "kind": "publisher",
+      "beats": [
+        "enterprise",
+        "journey"
+      ],
+      "interval_hours": 48,
+      "enabled": false,
+      "priority": 3,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://www.retailtouchpoints.com/feed/"
+        },
+        {
+          "type": "html",
+          "url": "https://www.retailtouchpoints.com/"
+        }
+      ],
+      "disabled_reason": "The public feed and homepage returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "cmswire",
+      "name": "CMSWire",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 72,
+      "enabled": false,
+      "priority": 4,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.cmswire.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(customer-experience|digital-experience|customer-data|marketing-automation|digital-marketing)/.+",
+      "disabled_reason": "The publisher's robots endpoint returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "et_brandequity",
+      "name": "ET BrandEquity",
+      "kind": "publisher",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://brandequity.economictimes.indiatimes.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/news/"
+    },
+    {
+      "id": "afaqs",
+      "name": "afaqs!",
+      "kind": "publisher",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 48,
+      "enabled": true,
+      "priority": 3,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.afaqs.com/news/digital"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(news|casestudies)/.+/.+"
+    },
+    {
+      "id": "the_drum",
+      "name": "The Drum",
+      "kind": "publisher",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 48,
+      "enabled": false,
+      "priority": 3,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.thedrum.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(news|opinion|awards-case-study)/",
+      "disabled_reason": "The public page returned a non-content 202 response in the 2026-11-15 server probe."
+    },
+    {
+      "id": "braze",
+      "name": "Braze customer stories",
+      "kind": "case_library",
+      "beats": [
+        "journey"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 4,
+      "max_pages": 3,
+      "lookback_days": 180,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.braze.com/customers"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(customers|resources/articles)/.+"
+    },
+    {
+      "id": "nectar360",
+      "name": "Nectar360 case studies",
+      "kind": "case_library",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 180,
+      "max_entries": 50,
+      "endpoints": [
+        {
+          "type": "sitemap",
+          "url": "https://www.nectar360.co.uk/case-study-sitemap.xml"
+        }
+      ],
+      "include": "/case-stud(y|ies)/.+"
+    },
+    {
+      "id": "think_google",
+      "name": "Think with Google",
+      "kind": "platform",
+      "beats": [
+        "journey"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 4,
+      "max_pages": 3,
+      "lookback_days": 180,
+      "max_entries": 80,
+      "endpoints": [
+        {
+          "type": "sitemap",
+          "url": "https://business.google.com/sitemaps/twg/sitemap-1.xml"
+        },
+        {
+          "type": "sitemap",
+          "url": "https://business.google.com/sitemaps/twg/sitemap-2.xml"
+        }
+      ],
+      "include": "/(us|in)/think/(ai-excellence|measurement|search-and-video|consumer-insights|future-of-marketing)/[^/]+$",
+      "title_include": "(case|customer|consumer|retail|commerce|loyalty|first party|omnichannel|campaign|measurement|martech|shop|store|data|ai)"
+    },
+    {
+      "id": "warc_public",
+      "name": "WARC public coverage",
+      "kind": "publisher",
+      "beats": [
+        "journey"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 5,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.warc.com/en/latest"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(news|content|en/article)/",
+      "disabled_reason": "The public index did not expose article links to the server collector in the 2026-11-15 probe; paid content is excluded."
+    },
+    {
+      "id": "phocuswire",
+      "name": "PhocusWire",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 4,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.phocuswire.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "disabled_reason": "The publisher's robots endpoint returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "finextra",
+      "name": "Finextra",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 5,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.finextra.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/newsarticle/",
+      "disabled_reason": "The public page returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "chiefmartec",
+      "name": "chiefmartec",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 5,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://chiefmartec.com/feed/"
+        },
+        {
+          "type": "html",
+          "url": "https://chiefmartec.com/"
+        }
+      ]
+    },
+    {
+      "id": "et_retail",
+      "name": "ET Retail",
+      "kind": "publisher",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 72,
+      "enabled": true,
+      "priority": 5,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://retail.economictimes.indiatimes.com/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/news/"
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify changelog",
+      "kind": "platform",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://shopify.dev/changelog"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/changelog/"
+    },
+    {
+      "id": "ftc",
+      "name": "FTC press releases",
+      "kind": "regulator",
+      "beats": [
+        "regulation"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.ftc.gov/news-events/news/press-releases"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/news-events/news/press-releases/\\d"
+    },
+    {
+      "id": "ico",
+      "name": "ICO news",
+      "kind": "regulator",
+      "beats": [
+        "regulation"
+      ],
+      "interval_hours": 24,
+      "enabled": false,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/news-and-blogs/\\d",
+      "disabled_reason": "The official ICO site says its News and blogs RSS is unavailable, and the current page exposed no dated article links to the server probe."
+    },
+    {
+      "id": "eu_digital",
+      "name": "European Commission digital news",
+      "kind": "regulator",
+      "beats": [
+        "regulation"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://digital-strategy.ec.europa.eu/en/news"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/en/news/.+"
+    },
+    {
+      "id": "meity",
+      "name": "MeitY updates",
+      "kind": "regulator",
+      "beats": [
+        "regulation"
+      ],
+      "interval_hours": 24,
+      "enabled": false,
+      "priority": 2,
+      "max_pages": 3,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.meity.gov.in/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(notifications|content|documents|static/uploads)/",
+      "disabled_reason": "The current homepage exposed no qualifying update links to the server probe; regulation coverage continues through primary gazette and EU/FTC sources."
+    },
+    {
+      "id": "p2pi",
+      "name": "Path to Purchase Institute",
+      "kind": "publisher",
+      "beats": [
+        "fmcg",
+        "journey"
+      ],
+      "interval_hours": 72,
+      "enabled": false,
+      "priority": 9,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://p2pi.com/"
+        }
+      ],
+      "disabled_reason": "Research retrieval returned 403; requires a permitted access route."
+    },
+    {
+      "id": "effie",
+      "name": "Effie public cases",
+      "kind": "case_library",
+      "beats": [
+        "journey"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 9,
+      "max_pages": 3,
+      "lookback_days": 14,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://effie.org/sample-cases/"
+        }
+      ],
+      "disabled_reason": "Public index needs access validation; paid case library is excluded."
+    },
+    {
+      "id": "cocacola",
+      "name": "Coca-Cola",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.coca-colacompany.com/media-center"
+        }
+      ],
+      "weekday": 0,
+      "selector": "a[href]",
+      "include": "/media-center/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "pepsico",
+      "name": "PepsiCo",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.pepsico.com/newsroom"
+        }
+      ],
+      "weekday": 0,
+      "selector": "a[href]",
+      "include": "/newsroom/(stories|press-releases)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "pg",
+      "name": "P&G",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "max_entries": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://us.pg.com/blogs/"
+        }
+      ],
+      "weekday": 0,
+      "selector": "a[href]",
+      "include": "/blogs/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "unilever",
+      "name": "Unilever",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.unilever.com/news/"
+        }
+      ],
+      "weekday": 0,
+      "selector": "a[href]",
+      "include": "/news/news-search/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "reckitt",
+      "name": "Reckitt",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.reckitt.com/newsroom/"
+        }
+      ],
+      "weekday": 1,
+      "selector": "a[href]",
+      "include": "/newsroom/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Reckitt mentions remain covered through FMCG aggregators."
+    },
+    {
+      "id": "nestle",
+      "name": "Nestlé",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.nestle.com/media/news"
+        }
+      ],
+      "weekday": 1,
+      "selector": "a[href]",
+      "disabled_reason": "The publisher's robots endpoint returned 403 in the 2026-11-15 server probe; Nestlé mentions remain covered through the FMCG aggregators."
+    },
+    {
+      "id": "mondelez",
+      "name": "Mondelēz",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.mondelezinternational.com/news/"
+        }
+      ],
+      "weekday": 1,
+      "selector": "a[href]",
+      "include": "/news/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Mondelēz mentions remain covered through FMCG aggregators."
+    },
+    {
+      "id": "loreal",
+      "name": "L’Oréal",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.loreal.com/en/news/"
+        }
+      ],
+      "weekday": 1,
+      "selector": "a[href]",
+      "include": "/en/news/.+",
+      "disabled_reason": "The current newsroom exposed no qualifying article links to the 2026-11-15 server probe; L’Oréal remains covered through FMCG aggregators."
+    },
+    {
+      "id": "colgate",
+      "name": "Colgate-Palmolive",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.colgatepalmolive.com/en-us/who-we-are/stories"
+        }
+      ],
+      "weekday": 2,
+      "selector": "a[href]",
+      "include": "/en-us/news/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "mars",
+      "name": "Mars",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.mars.com/news-and-stories"
+        }
+      ],
+      "weekday": 2,
+      "selector": "a[href]",
+      "include": "/news-and-stories/(articles|press-releases-statements)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "danone",
+      "name": "Danone",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.danone.com/media/press-releases-list.html"
+        }
+      ],
+      "weekday": 2,
+      "selector": "a[href]",
+      "include": "/media/.+press.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Danone mentions remain covered through FMCG aggregators."
+    },
+    {
+      "id": "haleon",
+      "name": "Haleon",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.haleon.com/news"
+        }
+      ],
+      "weekday": 2,
+      "selector": "a[href]",
+      "include": "/news/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Haleon mentions remain covered through FMCG aggregators."
+    },
+    {
+      "id": "tata",
+      "name": "Tata Consumer",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.tataconsumer.com/newsroom"
+        }
+      ],
+      "weekday": 3,
+      "selector": "a[href]",
+      "include": "/newsroom/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Tata Consumer mentions remain covered through India FMCG aggregators."
+    },
+    {
+      "id": "itc",
+      "name": "ITC",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "max_entries": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.itcportal.com/media-centre/press-releases.aspx"
+        }
+      ],
+      "weekday": 3,
+      "selector": "a[href]",
+      "include": "/media-centre/press-releases/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "godrej",
+      "name": "Godrej Consumer",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.godrejcp.com/media/press-releases"
+        }
+      ],
+      "weekday": 3,
+      "selector": "a[href]",
+      "disabled_reason": "The newsroom currently exposes releases as PDFs; media documents are retained for manual review rather than scraped as articles."
+    },
+    {
+      "id": "marico",
+      "name": "Marico",
+      "kind": "brand",
+      "beats": [
+        "fmcg"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://marico.com/india/media"
+        }
+      ],
+      "weekday": 3,
+      "selector": "a[href]",
+      "include": "/india/media/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; Marico mentions remain covered through India FMCG aggregators."
+    },
+    {
+      "id": "walmart",
+      "name": "Walmart",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://corporate.walmart.com/newsroom"
+        }
+      ],
+      "weekday": 4,
+      "selector": "a[href]",
+      "include": "/news/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "target",
+      "name": "Target",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://corporate.target.com/press"
+        }
+      ],
+      "weekday": 4,
+      "selector": "a[href]",
+      "include": "/press/(release|fact-sheet)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.aboutamazon.com/news"
+        }
+      ],
+      "weekday": 4,
+      "selector": "a[href]",
+      "include": "/news/(retail|company-news|innovation-at-amazon|small-business|operations|devices)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "albertsons",
+      "name": "Albertsons",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.albertsonscompanies.com/newsroom/press-releases/default.aspx"
+        }
+      ],
+      "weekday": 4,
+      "selector": "a[href]",
+      "disabled_reason": "The public newsroom returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "nike",
+      "name": "Nike",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://about.nike.com/en/newsroom"
+        }
+      ],
+      "weekday": 5,
+      "selector": "a[href]",
+      "include": "/en/newsroom/(releases|stories)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://about.starbucks.com/stories/"
+        }
+      ],
+      "weekday": 5,
+      "selector": "a[href]",
+      "disabled_reason": "The publisher's robots endpoint returned 403 in the 2026-11-15 server probe."
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald’s",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://corporate.mcdonalds.com/corpmcd/our-stories.html"
+        }
+      ],
+      "weekday": 5,
+      "selector": "a[href]",
+      "include": "/corpmcd/our-stories/.+",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe; McDonald’s remains covered through enterprise and campaign publishers."
+    },
+    {
+      "id": "disney",
+      "name": "Disney",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://thewaltdisneycompany.com/news/"
+        }
+      ],
+      "weekday": 5,
+      "selector": "a[href]",
+      "include": "/news/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "marriott",
+      "name": "Marriott",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": false,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://news.marriott.com/"
+        }
+      ],
+      "weekday": 6,
+      "selector": "a[href]",
+      "disabled_reason": "The current newsroom exposed no article links to the server probe."
+    },
+    {
+      "id": "hilton",
+      "name": "Hilton",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://stories.hilton.com/"
+        }
+      ],
+      "weekday": 6,
+      "selector": "a[href]",
+      "include": "/(releases|stories|technology|innovation)/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "amex",
+      "name": "American Express",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://www.americanexpress.com/en-us/newsroom/"
+        }
+      ],
+      "weekday": 6,
+      "selector": "a[href]",
+      "include": "/en-us/newsroom/.+",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    },
+    {
+      "id": "samsung",
+      "name": "Samsung",
+      "kind": "brand",
+      "beats": [
+        "enterprise"
+      ],
+      "interval_hours": 168,
+      "enabled": true,
+      "priority": 6,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://news.samsung.com/global/"
+        }
+      ],
+      "weekday": 6,
+      "selector": "a[href]",
+      "validation_note": "Newsroom endpoint must pass collector probe; failures stay visible."
+    }
+  ]
+}
