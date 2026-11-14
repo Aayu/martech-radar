@@ -1,6 +1,6 @@
 import json
 
-from radar.discovery import iso_date, parse_feed, parse_listing, parse_sitemap
+from radar.discovery import iso_date, parse_feed, parse_json_index, parse_listing, parse_sitemap
 from radar.export import export_all, safe_cell
 from radar.store import Store
 
@@ -19,6 +19,13 @@ def test_feed_and_listing_extract_links():
     assert entries[0]["url"] == "https://example.com/news/2"
 
 
+def test_listing_recovers_headline_from_generic_read_link():
+    html = """<main><article><h2>Adobe launches measurable customer journey tooling</h2>
+      <a href='/blog/new-tool'>Read article</a></article></main>"""
+    entries, _ = parse_listing(html, "https://example.com/", {"include": "/blog/"})
+    assert entries[0]["title"] == "Adobe launches measurable customer journey tooling"
+
+
 def test_explicit_sitemap_extracts_only_included_articles():
     xml = """<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
       <url><loc>https://example.com/cases/connected-journey</loc><lastmod>2026-11-12</lastmod></url>
@@ -29,6 +36,19 @@ def test_explicit_sitemap_extracts_only_included_articles():
     assert entries == [{"url": "https://example.com/cases/connected-journey",
                         "title": "Connected Journey", "published": None,
                         "modified": "2026-11-12T00:00:00+00:00"}]
+
+
+def test_json_index_reads_bounded_newsroom_records():
+    payload = json.dumps({"data": [
+        {"path": "/blog/new-customer-journey", "h1": "A new measurable customer journey",
+         "date": 46338, "lastModified": 1794529284},
+        {"path": "/about", "h1": "About the company", "date": 46338},
+    ]})
+    entries, nxt = parse_json_index(payload, "https://example.com/blog/query-index.json",
+                                    {"include": "/blog/", "max_entries": 10})
+    assert nxt is None
+    assert entries[0]["url"] == "https://example.com/blog/new-customer-journey"
+    assert entries[0]["published"].startswith("2026-11-12")
 
 
 def test_export_preserves_notes_and_neutralizes_formulas(tmp_path):

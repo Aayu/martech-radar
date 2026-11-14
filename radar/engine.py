@@ -12,7 +12,7 @@ from urllib.parse import urljoin, urlsplit
 import trafilatura
 from bs4 import BeautifulSoup
 
-from .discovery import parse_feed, parse_listing, parse_sitemap
+from .discovery import parse_feed, parse_json_index, parse_listing, parse_sitemap
 from .network import FetchError, BudgetExceeded
 from .ranking import rank, normalize
 from .store import utcnow, canonical_url
@@ -52,6 +52,8 @@ def collect_source(store, fetcher, source, now, run_id):
                         entries, nxt = parse_feed(text, resolved)
                     elif endpoint["type"] == "sitemap":
                         entries, nxt = parse_sitemap(text, resolved, source)
+                    elif endpoint["type"] == "json":
+                        entries, nxt = parse_json_index(text, resolved, source)
                     else:
                         entries, nxt = parse_listing(text, resolved, source)
                 except BudgetExceeded:
@@ -66,7 +68,8 @@ def collect_source(store, fetcher, source, now, run_id):
                     # extraction budget on articles outside this source's window.
                     effective_date = entry.get("published") or entry.get("modified")
                     outside_window = bool(effective_date and effective_date < horizon)
-                    low_signal = rank(entry.get("title", ""), "", source)["priority"] == 0
+                    low_signal = rank(entry.get("title", ""), "", source,
+                                      entry.get("published") or entry.get("modified"), now)["priority"] == 0
                     if outside_window:
                         entry = {**entry, "state": "outside_window"}
                     aid, is_new = store.add_article(sid, entry, timestamp)
@@ -151,7 +154,7 @@ def extract_article(store, fetcher, article, source, now):
             if SequenceMatcher(None, normalize(title), normalize(other["title"])).ratio() >= .86:
                 related = other["id"]
                 break
-        ranked = rank(title, text[:30000], source)
+        ranked = rank(title, text[:30000], source, published, now)
         links = []
         container = soup.find("article") or soup.find("main") or soup
         for a in container.select("a[href]"):
@@ -169,7 +172,7 @@ def extract_article(store, fetcher, article, source, now):
         store.db.execute("""UPDATE articles SET title=?,published=?,state='extracted',attempts=attempts+1,
           retry_after=NULL,text=?,excerpt=?,content_hash=?,canonical_hint=?,tags=?,companies=?,beats=?,
           priority=?,reason=?,evidence=?,duplicate_of=?,related_to=?,original_links=?,error=? WHERE id=?""",
-          (title, published, text[:200000], " ".join(text.split()[:24]), fingerprint, canonical_hint,
+          (title, published, text[:200000], " ".join(text.split()[:120]), fingerprint, canonical_hint,
            json.dumps(ranked["tags"]), json.dumps(ranked["companies"]), json.dumps(ranked["beats"]),
            ranked["priority"], ranked["reason"], ranked["evidence"], duplicate["id"] if duplicate else None,
            related, json.dumps(list(dict.fromkeys(links))[:15]), error, aid))
@@ -208,7 +211,8 @@ def run(store, configs, fetcher, max_sources=14, max_articles=24, force=False, s
         if source_ids:
             queue = [a for a in queue if a["source_id"] in source_ids]
         # Title triage only orders work; even zero-point articles stay in the durable queue.
-        queue.sort(key=lambda a: (a["attempts"], -rank(a["title"], "", sources.get(a["source_id"], {}))["priority"]))
+        queue.sort(key=lambda a: (a["attempts"], -rank(a["title"], "", sources.get(a["source_id"], {}),
+                                                       a.get("published") or a.get("modified"), now)["priority"]))
         for article in queue[:max_articles]:
             print(f"Reading {article['title'][:90]}", flush=True)
             ok = extract_article(store, fetcher, article, sources.get(article["source_id"], {}), now)

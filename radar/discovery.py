@@ -4,7 +4,7 @@ import calendar
 import json
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin, urlsplit
 
 import feedparser
@@ -91,6 +91,52 @@ def parse_sitemap(text, base, source):
     return entries[:source.get("max_entries", len(entries))], None
 
 
+def parse_json_index(text, base, source):
+    """Read a bounded public newsroom index, such as an AEM query index."""
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise ValueError("Invalid JSON index") from exc
+    records = payload.get("data") if isinstance(payload, dict) else payload
+    if not isinstance(records, list):
+        raise ValueError("JSON index has no data records")
+
+    def index_date(value):
+        if isinstance(value, (int, float)):
+            if 20_000 < value < 100_000:  # Excel serial date used by some AEM indexes.
+                return (datetime(1899, 12, 30, tzinfo=timezone.utc) + timedelta(days=value)).isoformat()
+            if value > 1_000_000_000:
+                return datetime.fromtimestamp(value, timezone.utc).isoformat()
+        return iso_date(value)
+
+    entries = []
+    hosts = source.get("hosts", [urlsplit(base).hostname])
+    for record in records:
+        if not isinstance(record, dict) or not record.get("path"):
+            continue
+        try:
+            url = canonical_url(urljoin(base, str(record["path"])))
+        except ValueError:
+            continue
+        parsed = urlsplit(url)
+        if parsed.hostname not in hosts:
+            continue
+        if source.get("include") and not re.search(source["include"], parsed.path):
+            continue
+        if re.search(source.get("exclude", r"$^"), url):
+            continue
+        title = str(record.get("h1") or record.get("title") or "").strip()
+        if len(title.split()) < 4:
+            continue
+        published = index_date(record.get("date"))
+        modified = index_date(record.get("lastModified"))
+        entries.append({"url": url, "title": title, "published": published, "modified": modified})
+    if not entries:
+        raise ValueError("No article links extracted from JSON index")
+    entries.sort(key=lambda item: (item.get("published") or item.get("modified") or "", item["title"]), reverse=True)
+    return entries[:source.get("max_entries", len(entries))], None
+
+
 def parse_listing(text, base, source):
     soup = BeautifulSoup(text, "html.parser")
     entries = {}
@@ -120,6 +166,16 @@ def parse_listing(text, base, source):
     hosts = source.get("hosts", [urlsplit(base).hostname])
     for a in soup.select(source.get("selector", "main a[href], article a[href], h2 a[href], h3 a[href]")):
         title = a.get_text(" ", strip=True)
+        # Some official product newsrooms use generic links such as "Read article"
+        # while the real headline sits in the same card. Recover that headline
+        # without accepting arbitrary navigation labels as stories.
+        if len(title.split()) < 5 and normalize_label(title) in {"read article", "read more", "learn more", "full release"}:
+            card = a.find_parent(["article", "li"])
+            if not card:
+                card = a.find_parent("div")
+            heading = card.find(["h1", "h2", "h3", "h4"]) if card else None
+            if heading:
+                title = heading.get_text(" ", strip=True)
         if len(title.split()) < 5 or len(title) > 350:
             continue
         try:
@@ -146,4 +202,8 @@ def parse_listing(text, base, source):
     if not entries:
         raise ValueError("No article links extracted; selector or access needs attention")
     return list(entries.values())[:source.get("max_entries", len(entries))], urljoin(base, nxt["href"]) if nxt else None
+
+
+def normalize_label(value):
+    return re.sub(r"\s+", " ", (value or "").strip().lower())
 

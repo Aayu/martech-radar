@@ -5,6 +5,7 @@ import html
 import json
 from pathlib import Path
 
+from .ranking import rank
 from .store import utcnow
 
 
@@ -16,6 +17,9 @@ def safe_cell(value):
 def tables(store):
     articles = store.rows("SELECT * FROM articles ORDER BY first_seen DESC")
     by_id = {a["id"]: a for a in articles}
+    source_records = store.rows("SELECT * FROM sources ORDER BY id")
+    source_configs = {s["id"]: json.loads(s["config"]) for s in source_records}
+    source_names = {sid: config["name"] for sid, config in source_configs.items()}
     reviewed = [a for a in articles if a["review_status"] in ("Reviewed", "Imported recommendation")
                 and (a["editorial_score"] or 0) >= 14 and a["read_status"] in ("To read", "Saved")
                 and not a["duplicate_of"]]
@@ -23,6 +27,32 @@ def tables(store):
     candidates = [a for a in articles if a["state"] == "extracted" and not a["duplicate_of"]
                   and a["review_status"] == "Unreviewed" and a["read_status"] != "Skip"]
     candidates.sort(key=lambda a: (a["priority"], a["published"] or "", a["first_seen"]), reverse=True)
+
+    # This is a transparent machine shortlist, not an editorial verdict. Re-score
+    # from the durable excerpt so ranking improvements apply to prior runs too.
+    assessed = []
+    for article in candidates:
+        assessment = rank(article["title"], article["excerpt"],
+                          source_configs.get(article["source_id"], {}),
+                          article["published"] or article["modified"])
+        signals = set(assessment["signals"])
+        evidence_signal = bool(signals & {"Quantified or business outcome", "Failure or counter-evidence",
+                                          "Rule, standard or measurement framework"})
+        strong = evidence_signal and assessment["priority"] >= 40
+        strong = strong or {"Live or scaled implementation", "Concrete mechanism"} <= signals
+        strong = strong or {"Strategic platform shift", "Concrete mechanism"} <= signals
+        if assessment["priority"] >= 40 and strong:
+            assessed.append((article, assessment))
+    assessed.sort(key=lambda item: (item[1]["priority"], item[0]["published"] or "",
+                                      item[0]["first_seen"]), reverse=True)
+    leadership, source_counts = [], {}
+    for article, assessment in assessed:
+        if source_counts.get(article["source_id"], 0) >= 2:
+            continue
+        leadership.append((article, assessment))
+        source_counts[article["source_id"]] = source_counts.get(article["source_id"], 0) + 1
+        if len(leadership) == 5:
+            break
     def record(a):
         return [a["id"], a["published"] or "Date unknown", a["source_id"], a["title"], a["url"],
                 ", ".join(json.loads(a["tags"])), a["reason"], a["evidence"], a["read_status"],
@@ -33,7 +63,7 @@ def tables(store):
                "Reading status", "Your notes", "Editorial review", "Editorial score /20", "Related story",
                "Links to investigate", "Collection status", "Collection issue", "First discovered"]
     source_rows = []
-    for s in store.rows("SELECT * FROM sources ORDER BY id"):
+    for s in source_records:
         c = json.loads(s["config"])
         source_rows.append([s["id"], c["name"], c["kind"], ", ".join(c["beats"]), c["interval_hours"],
                             "Enabled" if c.get("enabled", True) else "Pending access",
@@ -46,6 +76,13 @@ def tables(store):
                          d.get("articles_extracted", 0), d.get("queued_articles", 0), d.get("requests", 0),
                          round(d.get("bytes", 0) / 1_000_000, 2), d.get("seconds", 0), d.get("stop_reason") or ""])
     return {
+        "Leadership Signals": [["Priority", "Headline", "Source", "Published", "Why read", "Link",
+                                "Evidence", "Triage /100", "Story ID", "Topics"],
+                               *[[i + 1, a["title"], source_names.get(a["source_id"], a["source_id"]),
+                                  a["published"] or "Date unknown",
+                                  score["reason"], a["url"], score["evidence"], score["priority"], a["id"],
+                                  ", ".join(score["tags"])]
+                                 for i, (a, score) in enumerate(leadership)]],
         "Inbox": [["Priority", "Headline", "Source", "Published", "Why read", "Link", "Review", "Score /20", "Story ID"],
                   *[[i + 1, a["title"], a["source_id"], a["published"] or "See original", a["reason"] or a["notes"],
                      a["url"], a["review_status"], a["editorial_score"], a["id"]] for i, a in enumerate(reviewed[:3])]],
@@ -62,11 +99,12 @@ def export_all(store, directory):
     root = Path(directory)
     root.mkdir(parents=True, exist_ok=True)
     result = tables(store)
-    payload = {"generated_at": utcnow(), "tables": result}
+    pending = store.one("SELECT count(*) AS n FROM articles WHERE state IN ('queued','failed')")["n"]
+    payload = {"generated_at": utcnow(), "current_pending": pending, "tables": result}
     (root / "radar.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2))
     for name, rows in result.items():
-        with (root / f"{name.lower()}.csv").open("w", newline="") as f:
-            csv.writer(f).writerows([[safe_cell(c) for c in row] for row in rows])
+        with (root / f"{name.lower()}.csv").open("w", newline="", encoding="utf-8") as f:
+            csv.writer(f, lineterminator="\n").writerows([[safe_cell(c) for c in row] for row in rows])
     build_html(payload, root / "index.html")
     return payload
 
@@ -83,11 +121,11 @@ def build_html(payload, path):
 <div class="tablewrap"><table><thead id="head"></thead><tbody id="body"></tbody></table></div>
 <p class="sub">This is a saved reading view. Reading status and notes can be edited in the connected spreadsheet. Sources shows checks that failed or need attention.</p>
 <script type="application/json" id="data">__DATA__</script><script>
-const data=JSON.parse(document.getElementById('data').textContent);let tab='Inbox';
+const data=JSON.parse(document.getElementById('data').textContent);let tab='Leadership Signals';
 const el=id=>document.getElementById(id);el('updated').textContent='Updated '+new Date(data.generated_at).toLocaleString('en-IN',{timeZone:'Asia/Kolkata'})+' IST';
-const contexts={Inbox:'Your three reviewed reading priorities. Imported recommendations retain their original assessment.',Candidates:'New articles awaiting evidence review. Their order is provisional; they have not been given a verified editorial score.',Library:'All collected and previously evaluated stories, including pending articles and duplicates.',Sources:'Source-by-source coverage. Partial coverage means the archive interval could not be verified.',Runs:'Collection history, pending work and measured resource use.'};
+const contexts={'Leadership Signals':'Up to five new items with implementation, outcome, failure or standards evidence. This is a machine shortlist for human review, not a publishing recommendation.',Inbox:'Your three reviewed reading priorities. Imported recommendations retain their original assessment.',Candidates:'New articles awaiting evidence review. Their order is provisional; they have not been given a verified editorial score.',Library:'All collected and previously evaluated stories, including pending articles and duplicates.',Sources:'Source-by-source coverage. Partial coverage means the archive interval could not be verified.',Runs:'Collection history, pending work and measured resource use.'};
 function cell(value){const t=document.createElement('td');const s=String(value??'');if(/^https?:\\/\\/[^\\s]+$/.test(s)){const a=document.createElement('a');a.href=s;a.textContent='Open source';a.target='_blank';a.rel='noopener noreferrer';t.append(a);}else t.textContent=s;return t;}
-function draw(){el('tabs').replaceChildren();for(const name of Object.keys(data.tables)){const b=document.createElement('button');b.textContent=name;b.className=tab===name?'active':'';b.onclick=()=>{tab=name;el('search').value='';draw()};el('tabs').append(b);}el('context').textContent=contexts[tab];const latest=data.tables.Runs[1];el('notice').className=latest&&latest[2]!=='Complete'?'notice':'hidden';el('notice').textContent=latest?'Latest run: '+latest[2]+'. '+latest[6]+' articles are still waiting for extraction. Check Sources for collection gaps.':'';const rows=data.tables[tab],q=el('search').value.toLowerCase();el('head').replaceChildren();const hr=document.createElement('tr');rows[0].forEach(v=>{const th=document.createElement('th');th.textContent=v;hr.append(th)});el('head').append(hr);el('body').replaceChildren();const filtered=rows.slice(1).filter(r=>r.join(' ').toLowerCase().includes(q));filtered.forEach(r=>{const tr=document.createElement('tr');r.forEach(v=>tr.append(cell(v)));el('body').append(tr)});el('count').textContent=' '+filtered.length+' records';el('cards').replaceChildren();if(tab==='Inbox'){filtered.forEach(r=>{const c=document.createElement('article');c.className='card';const l=document.createElement('span');l.className='label';l.textContent='Read '+r[0]+' · '+r[2];const h=document.createElement('h2'),a=document.createElement('a');a.href=r[5];a.textContent=r[1];a.target='_blank';a.rel='noopener noreferrer';h.append(a);const p=document.createElement('p');p.textContent=r[4];c.append(l,h,p);el('cards').append(c)});}}
+function draw(){el('tabs').replaceChildren();for(const name of Object.keys(data.tables)){const b=document.createElement('button');b.textContent=name;b.className=tab===name?'active':'';b.onclick=()=>{tab=name;el('search').value='';draw()};el('tabs').append(b);}el('context').textContent=contexts[tab];const latest=data.tables.Runs[1],pending=data.current_pending??(latest?latest[6]:0);el('notice').className=pending?'notice':'hidden';el('notice').textContent=latest?'Latest run: '+latest[2]+'. '+pending+' articles are currently waiting for extraction. Check Sources for collection gaps.':'';const rows=data.tables[tab],q=el('search').value.toLowerCase();el('head').replaceChildren();const hr=document.createElement('tr');rows[0].forEach(v=>{const th=document.createElement('th');th.textContent=v;hr.append(th)});el('head').append(hr);el('body').replaceChildren();const filtered=rows.slice(1).filter(r=>r.join(' ').toLowerCase().includes(q));filtered.forEach(r=>{const tr=document.createElement('tr');r.forEach(v=>tr.append(cell(v)));el('body').append(tr)});el('count').textContent=' '+filtered.length+' records';el('cards').replaceChildren();if(tab==='Inbox'||tab==='Leadership Signals'){filtered.forEach(r=>{const c=document.createElement('article');c.className='card';const l=document.createElement('span');l.className='label';l.textContent=(tab==='Inbox'?'Read ':'Signal ')+r[0]+' · '+r[2]+(tab==='Leadership Signals'?' · '+r[7]+'/100':'');const h=document.createElement('h2'),a=document.createElement('a');a.href=r[5];a.textContent=r[1];a.target='_blank';a.rel='noopener noreferrer';h.append(a);const p=document.createElement('p');p.textContent=r[4];c.append(l,h,p);el('cards').append(c)});}}
 el('search').oninput=draw;draw();</script></body></html>'''
     path.write_text(template.replace("__DATA__", data))
 

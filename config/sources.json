@@ -52,6 +52,158 @@
       ]
     },
     {
+      "id": "adobe_experience_cloud",
+      "name": "Adobe Experience Cloud",
+      "kind": "platform",
+      "beats": [
+        "enterprise",
+        "adtech",
+        "journey"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 2,
+      "lookback_days": 21,
+      "max_entries": 100,
+      "queue_limit": 5,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "json",
+          "url": "https://business.adobe.com/blog/query-index.json"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/blog/.+",
+      "exclude": "/blog/(news|trends|basics)$"
+    },
+    {
+      "id": "meta_ads_engineering",
+      "name": "Meta ads engineering",
+      "kind": "platform",
+      "beats": [
+        "adtech",
+        "enterprise"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 1,
+      "lookback_days": 21,
+      "queue_limit": 4,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://engineering.fb.com/feed/"
+        }
+      ]
+    },
+    {
+      "id": "google_ads_commerce",
+      "name": "Google Ads & Commerce",
+      "kind": "platform",
+      "beats": [
+        "adtech",
+        "enterprise",
+        "journey"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 1,
+      "lookback_days": 21,
+      "queue_limit": 5,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://blog.google/products/ads-commerce/rss/"
+        }
+      ]
+    },
+    {
+      "id": "amazon_ads",
+      "name": "Amazon Ads newsroom and cases",
+      "kind": "platform",
+      "beats": [
+        "adtech",
+        "enterprise",
+        "journey",
+        "fmcg"
+      ],
+      "interval_hours": 24,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 2,
+      "lookback_days": 21,
+      "queue_limit": 6,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://advertising.amazon.com/library/newsroom"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(library|resources)/(news|case-studies|whats-new)/.+"
+    },
+    {
+      "id": "iab_tech_lab",
+      "name": "IAB Tech Lab",
+      "kind": "standards",
+      "beats": [
+        "adtech",
+        "regulation"
+      ],
+      "interval_hours": 48,
+      "enabled": true,
+      "priority": 1,
+      "max_pages": 2,
+      "lookback_days": 30,
+      "queue_limit": 5,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "feed",
+          "url": "https://iabtechlab.com/feed/"
+        },
+        {
+          "type": "html",
+          "url": "https://iabtechlab.com/press-releases/"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/(press-releases|blog)/.+"
+    },
+    {
+      "id": "tiktok_business",
+      "name": "TikTok business newsroom",
+      "kind": "platform",
+      "beats": [
+        "adtech",
+        "enterprise",
+        "journey"
+      ],
+      "interval_hours": 48,
+      "enabled": false,
+      "priority": 2,
+      "max_pages": 2,
+      "lookback_days": 21,
+      "queue_limit": 4,
+      "low_signal_samples": 0,
+      "endpoints": [
+        {
+          "type": "html",
+          "url": "https://ads.tiktok.com/business/en/blog"
+        }
+      ],
+      "selector": "a[href]",
+      "include": "/business/en(?:-US)?/blog/.+",
+      "disabled_reason": "The official TikTok for Business blog timed out in two server probes on 2026-11-15; retained for a future permitted feed or stable server adapter."
+    },
+    {
       "id": "adexchanger",
       "name": "AdExchanger",
       "kind": "publisher",

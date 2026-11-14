@@ -6,7 +6,7 @@ The collector does not assign the 20-point editorial score automatically. Its pr
 
 ## What it covers
 
-The source registry has 53 named sources. Twenty-nine passed the initial server probe and are enabled. The others remain visible as `Pending access`, with the exact reason: publisher robots rules, a blocked server request, a client-rendered index, or a PDF-only newsroom. This avoids treating a failed check as successful coverage.
+The source registry has 59 named sources. Thirty-four are enabled. The others remain visible as `Pending access`, with the exact reason: publisher robots rules, a blocked server request, a client-rendered index, or a PDF-only newsroom. This avoids treating a failed check as successful coverage.
 
 Every run considers three standing beats:
 
@@ -18,13 +18,13 @@ Regulation, measurement, commerce platforms, case libraries and practitioner sig
 
 ## What is produced
 
-- `outputs/collector/index.html`: searchable browser view with Inbox, Candidates, Library, Sources and Runs;
+- `outputs/collector/index.html`: searchable browser view with Leadership Signals, Inbox, Candidates, Library, Sources and Runs;
 - `outputs/collector/*.csv`: spreadsheet-friendly exports of those views;
 - `outputs/collector/radar.json`: the same output as structured data;
 - `state/snapshot/`: text-based durable state for deduplication, source checkpoints, reading status and notes;
 - `outputs/collector/Martech Radar.xlsx`: the verified local Excel reader created during setup. It is intentionally ignored by Git because the hosted run publishes the live HTML and CSV views.
 
-The browser view is read-only. Reading status and notes can be updated with the `review` command or, after a Google Sheets connection is explicitly approved, through a synced spreadsheet workflow.
+Leadership Signals is a maximum five-item machine shortlist. It requires outcome, failure, standards, live implementation or a material platform shift plus concrete mechanics. It is not an editorial verdict. The browser view is read-only. Reading status and notes can be updated with the `review` command or, after a Google Sheets connection is explicitly approved, through a synced spreadsheet workflow.
 
 ## Run locally
 

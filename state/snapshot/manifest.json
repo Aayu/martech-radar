@@ -35,7 +35,7 @@
         "legacy_disposition",
         "brief"
       ],
-      "rows": 696
+      "rows": 888
     },
     "checks": {
       "columns": [
@@ -72,7 +72,7 @@
         "first_seen",
         "last_seen"
       ],
-      "rows": 710
+      "rows": 903
     },
     "sources": {
       "columns": [
@@ -87,7 +87,7 @@
         "discovered",
         "consecutive_failures"
       ],
-      "rows": 53
+      "rows": 59
     }
   },
   "version": 1
